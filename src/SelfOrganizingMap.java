@@ -2,19 +2,28 @@
  * Created by Chris on 1/24/2017.
  */
 public class SelfOrganizingMap {
+  private int numberOfNodesInX;
+  private int numberOfNodesInY;
+  private int numberOfAttributes;
+  private float[][][] trainingData;
 
-    private int numberOfNodesInX;
-    private int numberOfNodesInY;
-    private int numberOfAttributes;
-    private float[][][] trainingData;
+  public SelfOrganizingMap(int nodesInXDirection, int nodesInYDirection, int numberOfNodeAttributes) {
+      this.numberOfNodesInX = nodesInXDirection;
+      this.numberOfNodesInY = nodesInYDirection;
+      this.numberOfAttributes = numberOfNodeAttributes;
+  }
 
-    public SelfOrganizingMap(int nodesInXDirection, int nodesInYDirection, int numberOfNodeAttributes) {
-        this.numberOfNodesInX = nodesInXDirection;
-        this.numberOfNodesInY = nodesInYDirection;
-        this.numberOfAttributes = numberOfNodeAttributes;
+
+  public void trainSelfOrganizingMap(float[][][] trainingData) {
+      this.trainingData = trainingData;
+      stepThroughTrainingIterations();
+  }
+
+  public void stepThroughTrainingIterations() {
+    for (int iteration=0; iteration<maxIterations; ++iteration) {
+      pickRandomPointsFromData();
+
     }
 
-    public void trainSelfOrganizingMap(float[][][] trainingData) {
-        this.trainingData = trainingData;
-    }
+  }
 }
