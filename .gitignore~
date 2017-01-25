@@ -1,7 +1,10 @@
 # Build and Release Folders
 
-# Other files and folders
+#Ignore IntelliJ related folders and files
 .idea/
 *.iml
+
+#Ignore vim related files
 *.swp
+
 

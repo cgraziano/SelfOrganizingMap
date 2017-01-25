@@ -6,5 +6,6 @@
 
 #Ignore vim related files
 *.swp
+*~
 
 
