@@ -2,4 +2,6 @@
 
 # Other files and folders
 .idea/
-.iml
+*.SelfOrganizingMap.iml
+*.swp
+
