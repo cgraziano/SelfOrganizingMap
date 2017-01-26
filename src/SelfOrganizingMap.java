@@ -21,9 +21,27 @@ public class SelfOrganizingMap {
 
   public void stepThroughTrainingIterations() {
     for (int iteration=0; iteration<maxIterations; ++iteration) {
-      pickRandomPointsFromData();
-
+      performOneTrainingIteration();
     }
+  }
+
+  public void performOneTrainingIteration() {
+    randomPoint = getRandomPointFromTrainingData();
+    NodeLocation nodeLocation = findClosestNode(randomPoint);
+    updateSurroundingNodes(nodeLocation);
+
 
   }
+
+  public float[] findClosestNode(float[] point) {
+  }
+
+  public void updateSurroundingNodes(NodeLocation nodeLocation) {
+
+  }
+
+  public float[][] classifyDataWithTrainedSelfOrganizingMap(float[][] inputData, SelfOrganizingMap) {
+
+  }
+
 }
