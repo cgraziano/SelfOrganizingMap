@@ -5,7 +5,7 @@ public class SelfOrganizingMap {
   private int numberOfNodesInX;
   private int numberOfNodesInY;
   private int numberOfAttributes;
-  private float[][][] trainingData;
+  private TrainingData trainingData;
 
   public SelfOrganizingMap(int nodesInXDirection, int nodesInYDirection, int numberOfNodeAttributes) {
       this.numberOfNodesInX = nodesInXDirection;
@@ -14,7 +14,7 @@ public class SelfOrganizingMap {
   }
 
 
-  public void trainSelfOrganizingMap(float[][][] trainingData) {
+  public void trainSelfOrganizingMap(TrainingData trainingData) {
       this.trainingData = trainingData;
       stepThroughTrainingIterations();
   }
@@ -29,15 +29,16 @@ public class SelfOrganizingMap {
     randomPoint = getRandomPointFromTrainingData();
     NodeLocation nodeLocation = findClosestNode(randomPoint);
     updateSurroundingNodes(nodeLocation);
+  }
 
-
+  public TrainingDataPoint getRandomPointFromTrainingData() {
+    return trainingData.getRandomPoint;
   }
 
   public float[] findClosestNode(float[] point) {
   }
 
   public void updateSurroundingNodes(NodeLocation nodeLocation) {
-
   }
 
   public float[][] classifyDataWithTrainedSelfOrganizingMap(float[][] inputData, SelfOrganizingMap) {
