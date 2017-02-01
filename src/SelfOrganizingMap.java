@@ -2,21 +2,21 @@
  * Created by Chris on 1/24/2017.
  */
 public class SelfOrganizingMap {
-  private int numberOfNodesInX;
-  private int numberOfNodesInY;
+  private NodeContainer nodeContainer;
   private int numberOfAttributes;
+  private int maxIterations;
   private TrainingData trainingData;
 
-  public SelfOrganizingMap(int nodesInXDirection, int nodesInYDirection, int numberOfNodeAttributes) {
-      this.numberOfNodesInX = nodesInXDirection;
-      this.numberOfNodesInY = nodesInYDirection;
-      this.numberOfAttributes = numberOfNodeAttributes;
+  public SelfOrganizingMap(NodeContainer nodeContainer, int numberOfNodeAttributes) {
+    this.nodeContainer = nodeContainer;
+    this.numberOfAttributes = numberOfNodeAttributes;
   }
 
 
-  public void trainSelfOrganizingMap(TrainingData trainingData) {
-      this.trainingData = trainingData;
-      stepThroughTrainingIterations();
+  public void trainSelfOrganizingMap(TrainingData trainingData, int maxIterations) {
+    this.trainingData = trainingData;
+    this.maxIterations = maxIterations;
+    stepThroughTrainingIterations();
   }
 
   public void stepThroughTrainingIterations() {
@@ -26,19 +26,13 @@ public class SelfOrganizingMap {
   }
 
   public void performOneTrainingIteration() {
-    randomPoint = getRandomPointFromTrainingData();
-    NodeLocation nodeLocation = findClosestNode(randomPoint);
-    updateSurroundingNodes(nodeLocation);
+    DataPoint randomPoint = getRandomPointFromTrainingData();
+    float[] nodeLocation = nodeContainer.findClosestNodeTo(randomPoint);
+    nodeContainer.updateSurroundingNodes(nodeLocation);
   }
 
-  public TrainingDataPoint getRandomPointFromTrainingData() {
-    return trainingData.getRandomPoint;
-  }
-
-  public float[] findClosestNode(float[] point) {
-  }
-
-  public void updateSurroundingNodes(NodeLocation nodeLocation) {
+  public DataPoint getRandomPointFromTrainingData() {
+    return trainingData.getRandomPoint();
   }
 
   public float[][] classifyDataWithTrainedSelfOrganizingMap(float[][] inputData, SelfOrganizingMap) {
