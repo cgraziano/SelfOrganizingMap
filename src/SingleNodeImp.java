@@ -8,7 +8,7 @@ public class SingleNodeImp implements SingleNode {
     this.attributes = attributes;
   }
 
-  public float[] getAttributesOfNode() {
+  public float[] getAttributes() {
     return this.attributes;
   }
 }

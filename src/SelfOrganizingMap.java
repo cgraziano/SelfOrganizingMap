@@ -27,16 +27,13 @@ public class SelfOrganizingMap {
 
   public void performOneTrainingIteration() {
     DataPoint randomPoint = getRandomPointFromTrainingData();
-    float[] nodeLocation = nodeContainer.findClosestNodeTo(randomPoint);
-    nodeContainer.updateSurroundingNodes(nodeLocation);
+    SingleNode closestNode = nodeContainer.findClosestNodeTo(randomPoint);
+    nodeContainer.updateSurroundingNodes(closestNode);
   }
 
   public DataPoint getRandomPointFromTrainingData() {
     return trainingData.getRandomPoint();
   }
 
-  public float[][] classifyDataWithTrainedSelfOrganizingMap(float[][] inputData, SelfOrganizingMap) {
-
-  }
 
 }

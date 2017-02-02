@@ -15,9 +15,7 @@ public class Node2DContainerImp implements NodeContainer {
   }
 
   public SingleNode findClosestNodeTo(DataPoint dataPoint) {
-    searchAllNodesForClosestEuclideanDistance(dataPoint);
-    }
-    return SingleNode();
+    return searchAllNodesForClosestEuclideanDistance(dataPoint);
   }
 
   public void updateSurroundingNodes(float[] centerNode) {
@@ -25,26 +23,21 @@ public class Node2DContainerImp implements NodeContainer {
   }
 
   private void buildNodeContainer() {
-    this.nodes = new SingleNode[nodesInSecondDimension][nodesInFirstDimension][numberOfAttributesPerNode];
+    this.nodes = new SingleNode[nodesInSecondDimension][nodesInFirstDimension];
   }
 
-  //A lot of things going on in this method. Try to extact different parts to make more readable and then
-  //DELTE THIS COMMENT!
-  private searchAllNodesForClosestEuclideanDistance(DataPoint dataPoint) {
+  private SingleNode searchAllNodesForClosestEuclideanDistance(DataPoint dataPoint) {
     float euclideanDistance = 0;
     float minimumEuclideanDistance = Float.MAX_VALUE;
-    SingleNode closestNode = new SingleNode();
+    MinimumValueSaver  minimumValueSaver = new MinimumValueSaver();
     for (int i=0; i<this.nodesInFirstDimension; ++i) {
       for (int j = 0; j<this.nodesInSecondDimension; ++j) {
-        float[] dataPointAttributes = dataPoint.getPointCoordinates();
-        float[] nodeAttributes = nodes[i][j].getAttributesOfNode();
-        euclideanDistance = findEuclideanDistanceBetweenTwoPoints(dataPointAttributes,nodeAttributes);
-        if (euclideanDistance<minimumEuclideanDistance)
-          minimumEuclideanDistance = euclideanDistance;
-
-
+        euclideanDistance = findEuclideanDistanceBetweenTwoPoints(dataPoint.getAttributes(),
+                                                                  nodes[i][j].getAttributes());
+        minimumValueSaver.compareAndSaveMinimumValueAndCorrespondingObject(euclideanDistance,nodes[i][j]);
       }
     }
+    return (SingleNode) minimumValueSaver.getObjectThatMinimumValueCorrespondsTo();
   }
 
   private float findEuclideanDistanceBetweenTwoPoints(float[] point1, float[] point2) {
@@ -58,5 +51,6 @@ public class Node2DContainerImp implements NodeContainer {
     }
     return (float) Math.sqrt((euclideanDistanceSquared));
   }
+
 
 }

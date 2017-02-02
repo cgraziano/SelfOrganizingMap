@@ -3,5 +3,5 @@
  */
 public interface NodeContainer {
   public SingleNode findClosestNodeTo(DataPoint dataPoint);
-  public void updateSurroundingNodes(float[] centerNode);
+  public void updateSurroundingNodes(SingleNode centerNode);
 }
