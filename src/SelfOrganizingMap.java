@@ -5,15 +5,14 @@ public class SelfOrganizingMap {
   private NodeContainer nodeContainer;
   private int numberOfAttributes;
   private int maxIterations;
-  private TrainingData trainingData;
+  private Data trainingData;
 
-  public SelfOrganizingMap(NodeContainer nodeContainer, int numberOfNodeAttributes) {
+  public SelfOrganizingMap(NodeContainer nodeContainer) {
     this.nodeContainer = nodeContainer;
-    this.numberOfAttributes = numberOfNodeAttributes;
   }
 
 
-  public void trainSelfOrganizingMap(TrainingData trainingData, int maxIterations) {
+  public void trainSelfOrganizingMap(Data trainingData, int maxIterations) {
     this.trainingData = trainingData;
     this.maxIterations = maxIterations;
     stepThroughTrainingIterations();
@@ -26,13 +25,13 @@ public class SelfOrganizingMap {
   }
 
   public void performOneTrainingIteration() {
-    DataPoint randomPoint = getRandomPointFromTrainingData();
-    SingleNode closestNode = nodeContainer.findClosestNodeTo(randomPoint);
+    DataPointImp randomPoint = getRandomPointFromTrainingData();
+    SingleNodeImp closestNode = nodeContainer.findClosestNodeTo(randomPoint);
     nodeContainer.updateSurroundingNodes(closestNode);
   }
 
-  public DataPoint getRandomPointFromTrainingData() {
-    return trainingData.getRandomPoint();
+  public DataPointImp getRandomPointFromTrainingData() {
+    return trainingData.getRandomDataPoint();
   }
 
 

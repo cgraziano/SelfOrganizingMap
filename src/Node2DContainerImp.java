@@ -14,19 +14,24 @@ public class Node2DContainerImp implements NodeContainer {
     buildNodeContainer();
   }
 
-  public SingleNode findClosestNodeTo(DataPoint dataPoint) {
+  public SingleNodeImp findClosestNodeTo(DataPoint dataPoint) {
     return searchAllNodesForClosestEuclideanDistance(dataPoint);
   }
 
-  public void updateSurroundingNodes(float[] centerNode) {
+  public void updateSurroundingNodes(SingleNodeImp centerNode) {
 
+  }
+
+  public SingleNodeImp findClosestNodeTo(DataPointImp dataPoint) {
+    SingleNodeImp sni = new SingleNodeImp();
+    return sni;
   }
 
   private void buildNodeContainer() {
     this.nodes = new SingleNode[nodesInSecondDimension][nodesInFirstDimension];
   }
 
-  private SingleNode searchAllNodesForClosestEuclideanDistance(DataPoint dataPoint) {
+  private SingleNodeImp searchAllNodesForClosestEuclideanDistance(DataPoint dataPoint) {
     float euclideanDistance = 0;
     float minimumEuclideanDistance = Float.MAX_VALUE;
     MinimumValueSaver  minimumValueSaver = new MinimumValueSaver();
@@ -37,7 +42,7 @@ public class Node2DContainerImp implements NodeContainer {
         minimumValueSaver.compareAndSaveMinimumValueAndCorrespondingObject(euclideanDistance,nodes[i][j]);
       }
     }
-    return (SingleNode) minimumValueSaver.getObjectThatMinimumValueCorrespondsTo();
+    return (SingleNodeImp) minimumValueSaver.getObjectThatMinimumValueCorrespondsTo();
   }
 
   private float findEuclideanDistanceBetweenTwoPoints(float[] point1, float[] point2) {
