@@ -14,24 +14,38 @@ public class Node2DContainerImp implements NodeContainer {
     buildNodeContainer();
   }
 
-  public SingleNodeImp findClosestNodeTo(DataPoint dataPoint) {
+  public SingleNodeImp findClosestNodeTo(DataPointImp dataPoint) {
     return searchAllNodesForClosestEuclideanDistance(dataPoint);
   }
 
   public void updateSurroundingNodes(SingleNodeImp centerNode) {
+    float distanceBeweenNodes = 0.0f;
+    for (int i = 0; i < nodesInSecondDimension; ++i) {
+      for (int j = 0; j < nodesInFirstDimension; ++j) {
+        distanceBeweenNodes = centerNode.calculateDistanceToNode(this.nodes[i][j]);
 
-  }
+      }
 
-  public SingleNodeImp findClosestNodeTo(DataPointImp dataPoint) {
-    SingleNodeImp sni = new SingleNodeImp();
-    return sni;
+    }
+
   }
 
   private void buildNodeContainer() {
     this.nodes = new SingleNode[nodesInSecondDimension][nodesInFirstDimension];
+    int numberOfNodeContainerDimensions = 2;
+    float[] nodeLocation = new float[numberOfNodeContainerDimensions];
+    float[] nodeAttributes = new float[numberOfAttributesPerNode];
+    for (int i = 0; i < nodesInSecondDimension; ++i) {
+      for (int j = 0; j < nodesInSecondDimension; ++j) {
+        nodeLocation[0] = i;
+        nodeLocation[1] = j;
+        this.nodes[i][j].setLocation(nodeLocation);
+        this.nodes[i][j].setAttributes(nodeAttributes);
+      }
+    }
   }
 
-  private SingleNodeImp searchAllNodesForClosestEuclideanDistance(DataPoint dataPoint) {
+  private SingleNodeImp searchAllNodesForClosestEuclideanDistance(DataPointImp dataPoint) {
     float euclideanDistance = 0;
     float minimumEuclideanDistance = Float.MAX_VALUE;
     MinimumValueSaver  minimumValueSaver = new MinimumValueSaver();
