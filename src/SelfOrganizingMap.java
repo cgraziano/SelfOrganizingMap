@@ -6,6 +6,7 @@ public class SelfOrganizingMap {
   private int numberOfAttributes;
   private int maxIterations;
   private Data trainingData;
+  private SingleNode centerNode;
 
   public SelfOrganizingMap(NodeContainer nodeContainer) {
     this.nodeContainer = nodeContainer;
@@ -27,7 +28,24 @@ public class SelfOrganizingMap {
   public void performOneTrainingIteration() {
     DataPointImp randomPoint = getRandomPointFromTrainingData();
     SingleNodeImp closestNode = nodeContainer.findClosestNodeTo(randomPoint);
-    nodeContainer.updateSurroundingNodes(closestNode);
+    updateAttributesOfSurroundingNodes(closestNode);
+  }
+
+  public void updateAttributesOfSurroundingNodes(SingleNodeImp centerNode) {
+    this.centerNode = centerNode;
+    float distanceBeweenNodes = 0.0f;
+    float scalarToUpdateNodeAttributes = 0.0f;
+    //TODO For all nodes. update node// understand iterators.
+    for (int i = 0; i < nodesInSecondDimension; ++i) {
+      for (int j = 0; j < nodesInFirstDimension; ++j) {
+        updateNodes(this.nodes[i][j]);
+      }
+    }
+  }
+
+  private void updateNodes(SingleNodeImp nodeToUpdated) {
+    distanceBeweenNodes = centerNode.calculateDistanceToNode(this.nodes[i][j]);
+    scalarToUpdateNodeAttributes =
   }
 
   public DataPointImp getRandomPointFromTrainingData() {

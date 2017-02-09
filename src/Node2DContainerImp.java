@@ -1,6 +1,10 @@
+import java.util.Iterator;
+
 /**
  * Created by Chris on 1/31/2017.
  */
+import java.util.Iterator;
+
 public class Node2DContainerImp implements NodeContainer {
   private int numberOfAttributesPerNode;
   private int nodesInFirstDimension;
@@ -8,8 +12,8 @@ public class Node2DContainerImp implements NodeContainer {
   private SingleNode[][] nodes;
 
   public Node2DContainerImp(int nodesInFirstDimension, int nodesInSecondDimension, int numberOfAttributesPerNode) {
-    this. nodesInFirstDimension = nodesInFirstDimension;
-    this. nodesInSecondDimension = nodesInSecondDimension;
+    this.nodesInFirstDimension = nodesInFirstDimension;
+    this.nodesInSecondDimension = nodesInSecondDimension;
     this.numberOfAttributesPerNode = numberOfAttributesPerNode;
     buildNodeContainer();
   }
@@ -18,16 +22,8 @@ public class Node2DContainerImp implements NodeContainer {
     return searchAllNodesForClosestEuclideanDistance(dataPoint);
   }
 
-  public void updateSurroundingNodes(SingleNodeImp centerNode) {
-    float distanceBeweenNodes = 0.0f;
-    for (int i = 0; i < nodesInSecondDimension; ++i) {
-      for (int j = 0; j < nodesInFirstDimension; ++j) {
-        distanceBeweenNodes = centerNode.calculateDistanceToNode(this.nodes[i][j]);
-
-      }
-
-    }
-
+  public SingleNode getNode(int i, int j) {
+    return this.nodes[i][j];
   }
 
   private void buildNodeContainer() {
@@ -35,12 +31,15 @@ public class Node2DContainerImp implements NodeContainer {
     int numberOfNodeContainerDimensions = 2;
     float[] nodeLocation = new float[numberOfNodeContainerDimensions];
     float[] nodeAttributes = new float[numberOfAttributesPerNode];
+    int nodeID = 0;
     for (int i = 0; i < nodesInSecondDimension; ++i) {
       for (int j = 0; j < nodesInSecondDimension; ++j) {
         nodeLocation[0] = i;
         nodeLocation[1] = j;
+        this.nodes[i][j] = new SingleNodeImp(nodeID);
         this.nodes[i][j].setLocation(nodeLocation);
         this.nodes[i][j].setAttributes(nodeAttributes);
+        ++nodeID;
       }
     }
   }
