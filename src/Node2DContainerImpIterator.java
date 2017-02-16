@@ -4,20 +4,37 @@
 import java.util.Iterator;
 
 public class Node2DContainerImpIterator implements Iterator<SingleNode>{
-  private Node2DContainerImp nodeContainer;
+  private Node2DContainer node2DContainer;
   private int iteratorIndex;
+  private int numberOfNodesInFirstDimension;
+  private int numberOfNodesInSecondDimension;
+  private int numberOfNodes;
 
-  public Node2DContainerImpIterator(Node2DContainerImp nodeContainer) {
-    this.nodeContainer = nodeContainer;
+  public Node2DContainerImpIterator(Node2DContainer node2DContainer) {
+    this.node2DContainer = node2DContainer;
     this.iteratorIndex = 0;
+    this.numberOfNodesInFirstDimension = node2DContainer.getNumberOfNodesInFirstDimension();
+    this.numberOfNodesInSecondDimension = node2DContainer.getNumberOfNodesInSecondDimension();
+    this.numberOfNodes = numberOfNodesInFirstDimension*numberOfNodesInSecondDimension;
   }
 
   public SingleNode next() {
-
-    return this.nodeContainer.getNode();
+    int secondDimensionIndex = iteratorIndex/numberOfNodesInSecondDimension;
+    int firstDimensionIndex = iteratorIndex%numberOfNodesInSecondDimension;
+    increaseIteratorIndex();
+    return this.node2DContainer.getNodeFromSpecifiedFirstAndSecondDimension(firstDimensionIndex,secondDimensionIndex);
   }
 
   public boolean hasNext() {
+    return iteratorIndexEqualToNumberOfNodesAvailable();
+  }
+
+  private void increaseIteratorIndex() {
+    ++iteratorIndex;
+  }
+
+  private boolean iteratorIndexEqualToNumberOfNodesAvailable() {
+    return iteratorIndex == this.numberOfNodes;
   }
 
 

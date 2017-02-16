@@ -16,7 +16,7 @@ public class DataImp implements Data {
     }
   }
 
-  public DataPointImp getRandomDataPoint() {
+  public DataPoint getRandomDataPoint() {
     int index = randomNumberGenerator.nextInt(this.dataPointArrayLength);
     return dataPointArray[index];
   }

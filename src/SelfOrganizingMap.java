@@ -1,15 +1,17 @@
+import java.util.Iterator;
+
 /**
  * Created by Chris on 1/24/2017.
  */
 public class SelfOrganizingMap {
-  private NodeContainer nodeContainer;
+  private Node2DContainer node2DContainer;
   private int numberOfAttributes;
   private int maxIterations;
   private Data trainingData;
   private SingleNode centerNode;
 
-  public SelfOrganizingMap(NodeContainer nodeContainer) {
-    this.nodeContainer = nodeContainer;
+  public SelfOrganizingMap(Node2DContainer node2DContainer) {
+    this.node2DContainer = node2DContainer;
   }
 
 
@@ -26,29 +28,27 @@ public class SelfOrganizingMap {
   }
 
   public void performOneTrainingIteration() {
-    DataPointImp randomPoint = getRandomPointFromTrainingData();
-    SingleNodeImp closestNode = nodeContainer.findClosestNodeTo(randomPoint);
+    DataPoint randomPoint = getRandomPointFromTrainingData();
+    SingleNode closestNode = node2DContainer.findClosestNodeTo(randomPoint);
     updateAttributesOfSurroundingNodes(closestNode);
   }
 
-  public void updateAttributesOfSurroundingNodes(SingleNodeImp centerNode) {
+  public void updateAttributesOfSurroundingNodes(SingleNode centerNode) {
     this.centerNode = centerNode;
     float distanceBeweenNodes = 0.0f;
     float scalarToUpdateNodeAttributes = 0.0f;
-    //TODO For all nodes. update node// understand iterators.
-    for (int i = 0; i < nodesInSecondDimension; ++i) {
-      for (int j = 0; j < nodesInFirstDimension; ++j) {
-        updateNodes(this.nodes[i][j]);
-      }
+    Iterator<SingleNode> nodeContainerIterator = this.node2DContainer.createIterator();
+    while (nodeContainerIterator.hasNext()) {
+      updateNode(nodeContainerIterator.next());
     }
   }
 
-  private void updateNodes(SingleNodeImp nodeToUpdated) {
-    distanceBeweenNodes = centerNode.calculateDistanceToNode(this.nodes[i][j]);
-    scalarToUpdateNodeAttributes =
+  private void updateNode(SingleNode nodeToUpdate) {
+    float distanceBeweenNodes = centerNode.calculateDistanceToNode(nodeToUpdate);
+    scalarToUpdateNodeAttributes = 2.0f;
   }
 
-  public DataPointImp getRandomPointFromTrainingData() {
+  public DataPoint getRandomPointFromTrainingData() {
     return trainingData.getRandomDataPoint();
   }
 

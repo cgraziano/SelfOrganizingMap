@@ -1,7 +1,7 @@
 /**
  * Created by Chris on 2/3/2017.
  */
-public class DataPointImp {
+public class DataPointImp implements DataPoint{
   private float[] attributes;
 
   public DataPointImp(float[] attributes) {
