@@ -36,6 +36,10 @@ public class Node2DContainerImp implements Node2DContainer {
     return new Node2DContainerImpIterator(this);
   }
 
+  public int getNumberOfAttributesPerNode() {
+    return this.numberOfAttributesPerNode;
+  }
+
   private void buildNodeContainer() {
     this.nodes = new SingleNodeImp[nodesInSecondDimension][nodesInFirstDimension];
     int numberOfNodeContainerDimensions = 2;
@@ -56,12 +60,11 @@ public class Node2DContainerImp implements Node2DContainer {
 
   private SingleNode searchAllNodesForClosestEuclideanDistance(DataPoint dataPoint) {
     float euclideanDistance = 0;
-    float minimumEuclideanDistance = Float.MAX_VALUE;
-    MinimumValueSaver  minimumValueSaver = new MinimumValueSaver();
-    for (int i=0; i<this.nodesInFirstDimension; ++i) {
+    MinimumValueSaver minimumValueSaver = new MinimumValueSaver();
+    for (int i = 0; i<this.nodesInFirstDimension; ++i) {
       for (int j = 0; j<this.nodesInSecondDimension; ++j) {
         euclideanDistance = findEuclideanDistanceBetweenTwoPoints(dataPoint.getAttributes(),
-                                                                  nodes[i][j].getAttributes());
+                                                                  this.nodes[i][j].getAttributes());
         minimumValueSaver.compareAndSaveMinimumValueAndCorrespondingObject(euclideanDistance,nodes[i][j]);
       }
     }
@@ -71,7 +74,7 @@ public class Node2DContainerImp implements Node2DContainer {
   private float findEuclideanDistanceBetweenTwoPoints(float[] point1, float[] point2) {
     float point1MinusPoint2 = 0;
     float euclideanDistanceSquared = 0;
-    int numberOfPointDimensions = point1.length;
+    int numberOfPointDimensions= point1.length;
 
     for (int i=0; i<numberOfPointDimensions; ++i) {
       point1MinusPoint2 = point1[i]-point2[i];

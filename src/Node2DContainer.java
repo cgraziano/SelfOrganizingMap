@@ -4,9 +4,10 @@
 import java.util.Iterator;
 
 public interface Node2DContainer {
-  public SingleNode findClosestNodeTo(DataPoint dataPoint);
-  public int getNumberOfNodesInFirstDimension();
-  public int getNumberOfNodesInSecondDimension();
-  public SingleNode getNodeFromSpecifiedFirstAndSecondDimension(int firstDimensionIndex, int secondDimensionIndex);
-  public Iterator<SingleNode> createIterator();
+  SingleNode findClosestNodeTo(DataPoint dataPoint);
+  int getNumberOfNodesInFirstDimension();
+  int getNumberOfNodesInSecondDimension();
+  int getNumberOfAttributesPerNode();
+  SingleNode getNodeFromSpecifiedFirstAndSecondDimension(int firstDimensionIndex, int secondDimensionIndex);
+  Iterator<SingleNode> createIterator();
 }

@@ -6,24 +6,53 @@ import java.util.Random;
 public class testSelfOrganizingMap {
 
   public static void main(String[] args) {
+    testSelfOrganizingMapTraining();
+  }
+
+  public static void testSelfOrganizingMapTraining() {
+    Node2DContainer nodeContainer = buildNodeContainer();
+    SelfOrganizingMap selfOrganizingMap = buildSelfOrganizingMap(nodeContainer);
+
+    int maxTrainingIterations = 10000000;
+    Data trainingData = createTrainingData();
+    selfOrganizingMap.trainSelfOrganizingMap(trainingData,maxTrainingIterations);
+    examineNodesOfSelfOrganizingMap(selfOrganizingMap);
+  }
+
+  public static void examineNodesOfSelfOrganizingMap(SelfOrganizingMap selfOrganizingMap) {
+    Node2DContainer nodes = selfOrganizingMap.getNodesOfSelfOrganizingMap();
+    Node2DContainerImpIterator nodeIterator = new Node2DContainerImpIterator(nodes);
+    while (nodeIterator.hasNext()) {
+      SingleNode currentNode = nodeIterator.next();
+      float[] attributes = currentNode.getAttributes();
+      System.out.println("Node ID = "+currentNode.getNodeID()+" Attribute 0,1 = "+attributes[0]+" , "+attributes[1]);
+    }
+
+  }
+
+  public static Node2DContainer buildNodeContainer() {
     int numberOfNodesInFirstDimension = 10;
     int numberOfNodesInSecondDimension = 10;
     int numberOfAttributesPerNode = 2;
     Node2DContainerImp nodeContainer = new Node2DContainerImp(numberOfNodesInFirstDimension,
-                                                              numberOfNodesInSecondDimension,
-                                                              numberOfAttributesPerNode);
-    SelfOrganizingMap selfOrganizingMap = new SelfOrganizingMap(nodeContainer);
+            numberOfNodesInSecondDimension, numberOfAttributesPerNode);
+    return nodeContainer;
+  }
 
-    int numberOfTrainingDataPoints = 20;
+  public static SelfOrganizingMap buildSelfOrganizingMap(Node2DContainer nodeContainer) {
+    SelfOrganizingMap selfOrganizingMap = new SelfOrganizingMap(nodeContainer);
+    return selfOrganizingMap;
+  }
+
+  public static Data createTrainingData() {
+    int numberOfTrainingDataPoints = 200;
     float minX = -1.0f;
     float maxX =  1.0f;
     float minY = -1.0f;
     float maxY =  1.0f;
     float[][] trainingDataArray = generateDataWithinBox(numberOfTrainingDataPoints,minX,maxX,minY,maxY);
     Data trainigData = new DataImp(trainingDataArray);
-
-    int maxIterations = 100;
-    selfOrganizingMap.trainSelfOrganizingMap(trainigData,maxIterations);
+    return trainigData;
   }
 
   public static float[][] generateDataWithinBox(int numberOfDataPoints, float minX, float maxX,
@@ -39,8 +68,6 @@ public class testSelfOrganizingMap {
       y = randomNumberGenerator.nextFloat()*(maxY - minY) + minY;
       data[i][0] = x;
       data[i][1] = y;
-      System.out.println("x = "+x);
-      System.out.println("y = "+y);
     }
     return data;
   }

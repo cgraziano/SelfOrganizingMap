@@ -2,15 +2,15 @@
  * Created by Chris on 2/1/2017.
  */
 public interface SingleNode {
-  public int getNodeID();
+  int getNodeID();
 
-  public void setAttributes(float[] attributes);
+  void setAttributes(float[] attributes);
 
-  public float[] getAttributes();
+  float[] getAttributes();
 
-  public void setLocation(float[] location);
+  void setLocation(float[] location);
 
-  public float[] getLocation();
+  float[] getLocation();
 
-  public float calculateDistanceToNode(SingleNode node1);
+  float calculateDistanceToNode(SingleNode node1);
 }

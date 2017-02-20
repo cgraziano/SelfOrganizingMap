@@ -3,22 +3,31 @@
  */
 import java.util.Random;
 public class DataImp implements Data {
-  private DataPointImp[] dataPointArray;
-  private int dataPointArrayLength;
+  private DataPoint[] dataPoints;
+  private int numberOfDataPoints;
   private Random randomNumberGenerator;
 
-  public DataImp(float[][] dataPoints) {
-    this.dataPointArrayLength = dataPoints.length;
-    this.dataPointArray = new DataPointImp[dataPointArrayLength];
+  public DataImp(float[][] dataPointsFloatArray) {
+    initializeRandomNumberGenerator();
+    transferDataFromFloatArrayToDataPointsArray(dataPointsFloatArray);
+  }
 
-    for (int i = 0; i < dataPointArrayLength; ++i) {
-      this.dataPointArray[i] = new DataPointImp(dataPoints[i]);
+  private void transferDataFromFloatArrayToDataPointsArray(float[][] dataPointsFloatArray) {
+    this.numberOfDataPoints = dataPointsFloatArray.length;
+    this.dataPoints = new DataPoint[this.numberOfDataPoints];
+
+    for (int i = 0; i < this.numberOfDataPoints; ++i) {
+      this.dataPoints[i] = new DataPointImp(dataPointsFloatArray[i]);
     }
   }
 
   public DataPoint getRandomDataPoint() {
-    int index = randomNumberGenerator.nextInt(this.dataPointArrayLength);
-    return dataPointArray[index];
+    int index = this.randomNumberGenerator.nextInt(this.numberOfDataPoints);
+    return this.dataPoints[index];
+  }
+
+  private void initializeRandomNumberGenerator() {
+    this.randomNumberGenerator = new Random();
   }
 
 }

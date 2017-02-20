@@ -26,15 +26,15 @@ public class Node2DContainerImpIterator implements Iterator<SingleNode>{
   }
 
   public boolean hasNext() {
-    return iteratorIndexEqualToNumberOfNodesAvailable();
+    return iteratorIndexLessThanNumberOfNodesAvailable();
   }
 
   private void increaseIteratorIndex() {
     ++iteratorIndex;
   }
 
-  private boolean iteratorIndexEqualToNumberOfNodesAvailable() {
-    return iteratorIndex == this.numberOfNodes;
+  private boolean iteratorIndexLessThanNumberOfNodesAvailable() {
+    return iteratorIndex < this.numberOfNodes;
   }
 
 

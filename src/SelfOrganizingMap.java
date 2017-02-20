@@ -17,8 +17,9 @@ public class SelfOrganizingMap {
 
   public SelfOrganizingMap(Node2DContainer node2DContainer) {
     this.node2DContainer = node2DContainer;
+    this.numberOfAttributes = this.node2DContainer.getNumberOfAttributesPerNode();
+    initializeNeighborhoodRadius();
   }
-
 
   public void trainSelfOrganizingMap(Data trainingData, int maxIterations) {
     this.trainingData = trainingData;
@@ -47,8 +48,11 @@ public class SelfOrganizingMap {
     }
   }
 
+  public Node2DContainer getNodesOfSelfOrganizingMap() {
+    return this.node2DContainer;
+  }
+
   private void updateNode(SingleNode nodeToUpdate) {
-    float updateScalar = 0.0f;
     if (currentIterationIsLessThan(this.numberOfIterationsForLargeNeighborhoods)) {
       this.weightOnDifferenceInDataAndNodeAttributes =
               0.9f*(1.0f-this.currentIteration/this.numberOfIterationsForLargeNeighborhoods);
@@ -67,8 +71,9 @@ public class SelfOrganizingMap {
       float[] newAttributes = new float[this.numberOfAttributes];
       for (int i = 0; i < this.numberOfAttributes; ++i) {
         newAttributes[i] = nodeToUpdate.getAttributes()[i] +
-                differenceBetweenDataAndNodeAttriutes[i]*this.weightOnDifferenceInDataAndNodeAttributes
+                differenceBetweenDataAndNodeAttriutes[i]*this.weightOnDifferenceInDataAndNodeAttributes;
       }
+      nodeToUpdate.setAttributes(newAttributes);
     }
   }
 
@@ -79,18 +84,23 @@ public class SelfOrganizingMap {
       float[] newAttributes = new float[this.numberOfAttributes];
       for (int i = 0; i < this.numberOfAttributes; ++i) {
         newAttributes[i] = nodeToUpdate.getAttributes()[i] +
-                differenceBetweenDataAndNodeAttriutes[i]*this.weightOnDifferenceInDataAndNodeAttributes
+                differenceBetweenDataAndNodeAttriutes[i]*this.weightOnDifferenceInDataAndNodeAttributes;
       }
+      nodeToUpdate.setAttributes(newAttributes);
     }
   }
 
   private boolean currentIterationIsLessThan(int iterationMark) {
-    return this.currentIteration<iterationMark;
+    return this.currentIteration < iterationMark;
+  }
+
+  private void initializeNeighborhoodRadius() {
+    this.neighborhoodRadius = this.node2DContainer.getNumberOfNodesInFirstDimension();
   }
 
   private boolean nodeIsWithinUpdatingNeighborhoodZone(SingleNode node) {
     float distanceToCenterNode = this.centerNode.calculateDistanceToNode(node);
-    return distanceToCenterNode < neighborhoodRadius;
+    return distanceToCenterNode < this.neighborhoodRadius;
   }
 
   private int calculateNumberOfIterationsForLargeNeighborhoods(int maxIterations) {
