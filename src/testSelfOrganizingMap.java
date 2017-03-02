@@ -13,7 +13,7 @@ public class testSelfOrganizingMap {
     Node2DContainer nodeContainer = buildNodeContainer();
     SelfOrganizingMap selfOrganizingMap = buildSelfOrganizingMap(nodeContainer);
 
-    int maxTrainingIterations = 10000000;
+    int maxTrainingIterations = 100000;
     Data trainingData = createTrainingData();
     selfOrganizingMap.trainSelfOrganizingMap(trainingData,maxTrainingIterations);
     examineNodesOfSelfOrganizingMap(selfOrganizingMap);
