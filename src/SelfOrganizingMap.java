@@ -54,7 +54,7 @@ public class SelfOrganizingMap {
     for (this.currentIteration=0; this.currentIteration<this.maxIterations; ++this.currentIteration) {
       performOneTrainingIteration();
       decreaseUpdateNeighborhoodSize();
-      updateWeightOnDifferenceBetweenNodeAndDataAttributes();
+      updateWeightOnDifferenceBetweenNodeAndDataAttribute();
     }
   }
 
@@ -83,13 +83,17 @@ public class SelfOrganizingMap {
     }
   }
 
+  private boolean currentIterationIsLessThan(int iterationToCompare) {
+    return this.currentIteration < iterationToCompare;
+  }
+
   public void updateAttributesOfSurroundingNodes(SingleNode centerNode) {
     this.centerNode = centerNode;
     Iterator<SingleNode> nodeContainerIterator = this.node2DContainer.createIterator();
     while (nodeContainerIterator.hasNext()) {
       SingleNode node = nodeContainerIterator.next();
       if (nodeWithinUpdateNeighborhood(node));
-        updateAttributesOfNode(nodeContainerIterator.next());
+        updateNode(nodeContainerIterator.next());
     }
   }
 
@@ -98,46 +102,28 @@ public class SelfOrganizingMap {
     return distanceToCenterNode < this.currentNeighborhoodRadius;
   }
 
-  private void updateAttributesOfNode(SingleNode nodeToUpdate) {
+  private void updateNode(SingleNode nodeToUpdate) {
     if (currentIterationIsLessThan(this.numberOfIterationsForLargeNeighborhoodUpdates)) {
       this.weightOnDifferenceInDataAndNodeAttributes =
               0.9f*(1.0f-this.currentIteration/this.numberOfIterationsForLargeNeighborhoodUpdates);
-      updateNodeWithLargeNeighborhood(nodeToUpdate);
     }
     else {
       this.weightOnDifferenceInDataAndNodeAttributes = 0.01f;
-      updateNodeWithSmallNeighborhood(nodeToUpdate);
     }
+    updateAttributesOfNode(nodeToUpdate);
   }
 
 
-  private void updateNodeWithLargeNeighborhood(SingleNode nodeToUpdate) {
-    if (nodeIsWithinUpdatingNeighborhoodZone(nodeToUpdate)) {
-      float[] differenceBetweenDataAndNodeAttriutes =
-              randomPoint.differenceBetweenThisAttributesAndTheseAttributes(nodeToUpdate.getAttributes());
-      float[] newAttributes = new float[this.numberOfAttributes];
-      for (int i = 0; i < this.numberOfAttributes; ++i) {
-        newAttributes[i] = nodeToUpdate.getAttributes()[i] +
-                differenceBetweenDataAndNodeAttriutes[i]*this.weightOnDifferenceInDataAndNodeAttributes;
-      }
-      nodeToUpdate.setAttributes(newAttributes);
+  private void updateAttributesOfNode(SingleNode nodeToUpdate) {
+    float[] differenceBetweenDataAndNodeAttriutes =
+            randomPoint.differenceBetweenThisAttributesAndTheseAttributes(nodeToUpdate.getAttributes());
+    float[] newAttributes = new float[this.numberOfAttributes];
+    for (int i = 0; i < this.numberOfAttributes; ++i) {
+      newAttributes[i] = nodeToUpdate.getAttributes()[i] +
+              differenceBetweenDataAndNodeAttriutes[i]*this.weightOnDifferenceInDataAndNodeAttributes;
     }
+    nodeToUpdate.setAttributes(newAttributes);
   }
-
-  private void updateNodeWithSmallNeighborhood(SingleNode nodeToUpdate) {
-    if (nodeIsWithinUpdatingNeighborhoodZone(nodeToUpdate)) {
-      float[] differenceBetweenDataAndNodeAttriutes =
-              randomPoint.differenceBetweenThisAttributesAndTheseAttributes(nodeToUpdate.getAttributes());
-      float[] newAttributes = new float[this.numberOfAttributes];
-      for (int i = 0; i < this.numberOfAttributes; ++i) {
-        newAttributes[i] = nodeToUpdate.getAttributes()[i] +
-                differenceBetweenDataAndNodeAttriutes[i]*this.weightOnDifferenceInDataAndNodeAttributes;
-      }
-      nodeToUpdate.setAttributes(newAttributes);
-    }
-  }
-
-
 
   public Node2DContainer getNodesOfSelfOrganizingMap() {
     return this.node2DContainer;

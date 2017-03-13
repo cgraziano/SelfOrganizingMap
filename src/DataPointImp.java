@@ -9,7 +9,7 @@ public class DataPointImp implements DataPoint{
   }
 
   public float[] getAttributes() {
-    return attributes;
+    return this.attributes;
   }
 
   public float[] differenceBetweenThisAttributesAndTheseAttributes(float[] otherAttributes) {

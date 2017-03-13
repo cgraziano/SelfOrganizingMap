@@ -12,12 +12,12 @@ public class DataImp implements Data {
     transferDataFromFloatArrayToDataPointsArray(dataPointsFloatArray);
   }
 
-  private void transferDataFromFloatArrayToDataPointsArray(float[][] dataPointsFloatArray) {
-    this.numberOfDataPoints = dataPointsFloatArray.length;
+  private void transferDataFromFloatArrayToDataPointsArray(float[][] arrayOfAttributeSets) {
+    this.numberOfDataPoints = arrayOfAttributeSets.length;
     this.dataPoints = new DataPoint[this.numberOfDataPoints];
 
     for (int i = 0; i < this.numberOfDataPoints; ++i) {
-      this.dataPoints[i] = new DataPointImp(dataPointsFloatArray[i]);
+      this.dataPoints[i] = new DataPointImp(arrayOfAttributeSets[i]);
     }
   }
 
