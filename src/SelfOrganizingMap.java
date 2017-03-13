@@ -74,7 +74,7 @@ public class SelfOrganizingMap {
   }
 
   private void updateWeightOnDifferenceBetweenNodeAndDataAttribute() {
-    if (currentIterationIsLessThan(this.numberOfIterationsForLargeNeighborhoodUpdates)) {
+    if (this.currentIteration < this.numberOfIterationsForLargeNeighborhoodUpdates) {
       this.weightOnDifferenceInDataAndNodeAttributes =
               0.9f*(1.0f-this.currentIteration/this.numberOfIterationsForLargeNeighborhoodUpdates);
     }
@@ -113,10 +113,9 @@ public class SelfOrganizingMap {
     updateAttributesOfNode(nodeToUpdate);
   }
 
-
   private void updateAttributesOfNode(SingleNode nodeToUpdate) {
     float[] differenceBetweenDataAndNodeAttriutes =
-            randomPoint.differenceBetweenThisAttributesAndTheseAttributes(nodeToUpdate.getAttributes());
+              randomPoint.differenceBetweenThisAttributesAndTheseAttributes(nodeToUpdate.getAttributes());
     float[] newAttributes = new float[this.numberOfAttributes];
     for (int i = 0; i < this.numberOfAttributes; ++i) {
       newAttributes[i] = nodeToUpdate.getAttributes()[i] +
