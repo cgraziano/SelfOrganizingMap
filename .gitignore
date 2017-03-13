@@ -3,6 +3,7 @@
 #Ignore IntelliJ related folders and files
 .idea/
 *.iml
+out/
 
 #Ignore vim related files
 *.swp
