@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class testSelfOrganizingMap {
 
-  public static void main(String[] args) {
+  public static void main(String[] arg) {
     testSelfOrganizingMapTraining();
   }
 

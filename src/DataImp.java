@@ -7,9 +7,9 @@ public class DataImp implements Data {
   private int numberOfDataPoints;
   private Random randomNumberGenerator;
 
-  public DataImp(float[][] dataPointsFloatArray) {
+  public DataImp(float[][] arrayOfPointsWithAttributes) {
     initializeRandomNumberGenerator();
-    transferDataFromFloatArrayToDataPointsArray(dataPointsFloatArray);
+    transferDataFromFloatArrayToDataPointsArray(arrayOfPointsWithAttributes);
   }
 
   private void transferDataFromFloatArrayToDataPointsArray(float[][] arrayOfAttributeSets) {
@@ -23,6 +23,10 @@ public class DataImp implements Data {
 
   public DataPoint getRandomDataPoint() {
     int index = this.randomNumberGenerator.nextInt(this.numberOfDataPoints);
+    return getDataPoint(index);
+  }
+
+  public DataPoint getDataPoint(int index) {
     return this.dataPoints[index];
   }
 
